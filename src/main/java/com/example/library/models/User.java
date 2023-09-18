@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class User {
             inverseJoinColumns=@JoinColumn(name="book_id")
     )
     @JsonIgnore
-    private List<Book> books;
+    private Set<Book> books;
 
     public void addBook(Book book) {
         this.books.add(book);

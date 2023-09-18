@@ -3,12 +3,14 @@ package com.example.library.services;
 import com.example.library.exceptions.BookIsNotFree;
 import com.example.library.models.Book;
 import com.example.library.models.User;
+import com.example.library.models.UserGetBook;
 import com.example.library.repositoties.BookRepository;
 import com.example.library.repositoties.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class LibraryService {
@@ -27,18 +29,19 @@ public class LibraryService {
     }
 
 
-    public void getBook(Long userId, Long bookId) {
-        Book book = bookRepository.findBookById(bookId);
+    public void getBook(UserGetBook userGetBook) {
+        Book book = bookRepository.findBookById(userGetBook.getIdBook());
         if (book == null || (book.getIsFree().equals(false))) {
             throw new BookIsNotFree();
         } else {
             book.setIsFree(false);
-            User userById = userRepository.findUserById(userId);
-            User user = new User(); // до этого искал user через репозиторий
-            user.setId(userId);
+            User userById = userRepository.findUserById(userGetBook.getIdUser());
+
+            User user = new User();
+            user.setId(userGetBook.getIdUser());
             user.setName(userById.getName());
             user.setPhoneNumber(userById.getPhoneNumber());
-            user.setBooks(List.of(book));
+            user.setBooks(Set.of(book));
             bookRepository.save(book);
             userRepository.save(user);
         }

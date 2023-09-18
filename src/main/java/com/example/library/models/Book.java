@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +32,6 @@ public class Book {
     private Boolean isFree;
 
     @ManyToMany(mappedBy = "books")
-    private List<User> users;
+    private Set<User> users;
 
 }

@@ -2,6 +2,7 @@ package com.example.library.controllers;
 
 import com.example.library.models.Book;
 import com.example.library.models.BookDTO;
+import com.example.library.models.UserGetBook;
 import com.example.library.services.LibraryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,9 @@ public class BookController {
         return modelMapper.map(book, BookDTO.class);
     }
 
-    @GetMapping("user/{userId}/book/{bookId}")
-    public ResponseEntity<?> getBook (@PathVariable Long userId, @PathVariable Long bookId){
-        libraryService.getBook(userId, bookId);
-        return new ResponseEntity<>(userId + " получил книгу " + bookId, HttpStatus.OK);
+    @PostMapping("/get")
+    public ResponseEntity<?> getBook (@RequestBody UserGetBook userGetBook){
+        libraryService.getBook(userGetBook);
+        return new ResponseEntity<>(userGetBook.getIdUser() + " получил книгу " + userGetBook.getIdBook(), HttpStatus.OK);
     }
 }
