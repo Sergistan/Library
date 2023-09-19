@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserGetBook {
-
-    private Long idBook;
+public class ReqBookAndUser {
 
     private Long idUser;
+    private Long idBook;
 }

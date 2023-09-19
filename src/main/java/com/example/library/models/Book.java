@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -31,7 +30,7 @@ public class Book {
     @Column (name = "is_free")
     private Boolean isFree;
 
-    @ManyToMany(mappedBy = "books")
-    private Set<User> users;
+    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    private Set<User> users = new HashSet<>();
 
 }

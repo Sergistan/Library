@@ -2,7 +2,7 @@ package com.example.library.controllers;
 
 import com.example.library.models.Book;
 import com.example.library.models.BookDTO;
-import com.example.library.models.UserGetBook;
+import com.example.library.models.ReqBookAndUser;
 import com.example.library.services.LibraryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +34,18 @@ public class BookController {
         return modelMapper.map(book, BookDTO.class);
     }
 
-    @PostMapping("/get")
-    public ResponseEntity<?> getBook (@RequestBody UserGetBook userGetBook){
-        libraryService.getBook(userGetBook);
-        return new ResponseEntity<>(userGetBook.getIdUser() + " получил книгу " + userGetBook.getIdBook(), HttpStatus.OK);
+    @PostMapping("/get_book")
+    public ResponseEntity<?> getBook (@RequestBody ReqBookAndUser reqBookAndUser){
+        String info = libraryService.getBook(reqBookAndUser);
+        return new ResponseEntity<>(info, HttpStatus.OK);
     }
+
+
+    @PostMapping("/put_book")
+    public ResponseEntity<?> putBook (@RequestBody ReqBookAndUser reqBookAndUser){
+        String info = libraryService.putBook(reqBookAndUser);
+        return new ResponseEntity<>(info, HttpStatus.OK);
+    }
+
+
 }
