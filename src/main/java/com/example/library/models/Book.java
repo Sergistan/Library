@@ -1,14 +1,14 @@
 package com.example.library.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,19 +18,24 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column (name = "author")
+    @Column(name = "author")
     private String author;
 
-    @Column (name = "date_of_publication")
+    @Column(name = "date_of_publication")
     private Integer dateOfPublication;
 
-    @Column (name = "is_free")
+    @Column(name = "is_free")
     private Boolean isFree;
 
-    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    @Column(name = "time_get_book")
+    private LocalDateTime timeGetBook;
+
+    @ManyToMany(mappedBy = "books")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<User> users = new HashSet<>();
 
 }

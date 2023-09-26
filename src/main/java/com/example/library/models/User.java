@@ -1,15 +1,14 @@
 package com.example.library.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,13 +25,23 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "user_book",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Book> books = new HashSet<>();
 
-    private Set<Book> books = new HashSet<>();;
+    public void addBook(Book book) {
+        this.books.add(book);
+        book.getUsers().add(this);
+    }
 
+    public void removeBook(Book book) {
+        this.books.remove(book);
+        book.getUsers().remove(this);
+    }
 }
